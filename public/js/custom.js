@@ -103,7 +103,7 @@
 				
 					if(rdata.status == 'success')
 					{
-						location.href=base_url+'/order/confirmation/'+rdata.order_id;
+						location.href=base_url+'confirmation/'+rdata.order_id;
 					}
 					else
 					{

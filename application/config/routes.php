@@ -43,6 +43,8 @@ $route['404_override'] = '';
 
 $route['order/(:num)'] = 'inventory/order/$1';
 $route['confirmation/(:num)'] = 'inventory/confirmation/$1';
+$route['logout'] = 'login/logout';
+$route['inventory_upload'] = 'upload';
 
 
 /* End of file routes.php */

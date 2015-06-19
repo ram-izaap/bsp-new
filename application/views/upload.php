@@ -1,11 +1,14 @@
 
 <div class="text-center"> <h2>Inventory Upload</h2> </div>
-<?php //if($this->loggedin): ?>  
-    <div class="pull-right"><a class=" btn btn-primary " href="/logout">Logout </a></div>
-  <?php //endif; ?>
+<?php $userdata = $this->session->userdata('userdata');
+  if(is_array($userdata) && isset($userdata['username'])):
+?>  
+    <div class="pull-right"><a class=" btn btn-primary " href="<?php echo site_url('logout');?>">Logout </a></div>
+  <?php endif; ?>
 <br/>
 <br/>
 <br/>
+
 <section class="forminfo1 full clearfix">
 
     <div class="upload-div">

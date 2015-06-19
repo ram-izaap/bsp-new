@@ -227,6 +227,12 @@ class Inventory extends CI_Controller {
 				
 				$output['order_id'] = $order_id;
 
+				//$this->load->library('email_manager');
+
+				//$this->email_manager->send_order_confirmation($order_id,$orderlinks_data);
+
+				$this->send_mail($order_id,$orderlinks_data);
+
 			}
 			else
 			{
@@ -366,6 +372,45 @@ class Inventory extends CI_Controller {
                 );
 
         return $rules;
+    }
+
+    public function send_mail($order_id = '',$data)
+    {
+    	//send email to user.
+		
+		$message = "Hi ".$data['name']."<br/><br/>";
+
+		$message .= "Your order has been craeted sucessfully!<br/>";
+
+		$message .= "click <a href='".base_url('confirmation/'.$order_id)."'>here</a> to view your order details<br/><br/>";
+
+		$message .= "Regards<br/>Clara Sunwoo";
+		
+		$to_emails = $data['buyer_email'].",test@clarasonline.com";
+
+		$subject = "Clara Sunwoo - Order#{$order_id}";
+
+		// To send HTML mail, the Content-type header must be set
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+
+		$headers .= "Reply-To: Test <test@clarasonline.com>". "\r\n";
+		// Additional headers
+		// $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
+		//$headers .= 'From: Birthday Reminder <birthday@example.com>' . "\r\n";
+		//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
+		//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
+
+		
+
+		if( ! mail($to_emails, $subject, $message, $headers) )
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
     }
 }
 

@@ -13,6 +13,10 @@ class Upload extends CI_Controller {
 	}
 	public function index()
 	{
+		$userdata = $this->session->userdata('userdata');
+  		if(!is_array($userdata) || !isset($userdata['username']))
+  			redirect('login');
+  		
 		$errors = array();
 		$success_uploads = 0;
 		$upload_error = '';

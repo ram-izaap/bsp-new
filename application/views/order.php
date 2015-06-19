@@ -170,7 +170,7 @@
 
 			<?php foreach ($close_outs as $parent_id => $parent): ?>
 				<div class="item">
-					<a href="#"><img class="prothumb main" src="<?php echo base_url('public/img');?>/proimg.jpg" width="380" height="700" alt=""> </a>
+					<a href="#"><img class="prothumb main" src="<?php echo base_url('public/media/'.$parent['sku'].'-'.strtoupper($color_name).'.jpg');?>" width="380" height="700" alt=""> </a>
 					<div style="position: absolute; top: 0px;" id="videoModal_<?php echo $parent_id;?>">
 						<video height="700" width="380" loop controls id="videoPlayer_<?php echo $parent_id;?>">
 							<source type="video/mp4" src="<?php echo base_url('public/media/'.$parent['sku'].'.mp4');?>"></source>

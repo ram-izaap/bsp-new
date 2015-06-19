@@ -74,17 +74,24 @@ class Inventory_model extends App_model {
           $pids     = implode(',', $pids);
           $app_str .= $app_str != ''? " OR ":'';
           $app_str .= " id IN ($pids) ";
+        }       
+        
+
+        if( $all_clearance != '' )
+        {
+            $app_str .= $app_str != ''? " OR ":'';
+        	$app_str .= "  clearance='Y' ";
+        }
+
+        if( $all_essential !='' )
+        {
+            $app_str .= $app_str != ''? " OR ":'';
+        	$app_str .= "  essential='Y' ";
         }
         
         if($app_str != '' )
-        	$app_str = ' ('.$app_str.')';
+            $app_str = ' ('.$app_str.')';
 
-        if( $all_clearance != '' )
-        	$app_str .= " AND clearance='Y' ";
-
-        if( $all_essential !='' )
-        	$app_str .= " AND essential='Y' ";
-        
         $sql = "SELECT p.*,t.sku as parent_sku FROM (
                                 SELECT parent_id,sku from product 
                                   WHERE ( $app_str )  
