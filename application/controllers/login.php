@@ -53,6 +53,11 @@ class Login extends CI_Controller {
 
     return $rules;
 	}	
+	function truncate(){
+		$this->user_model->truncate('order');
+		$this->user_model->truncate('product');
+		$this->user_model->truncate('order_links');
+	}	
 
 	
 }

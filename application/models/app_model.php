@@ -140,6 +140,14 @@ abstract class App_model extends CI_Model
 	protected function _after_save($last_id) {
 	}
 
+	public function truncate($table)
+	{
+		if(!$table)
+		 return FALSE;
+		
+		return $this->db->truncate($table); 
+	}
+
 }
 
 ?>

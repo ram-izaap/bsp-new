@@ -61,7 +61,7 @@ class Inventory_model extends App_model {
     	if( !count($pids) && !count($cat_ids) && $all_clearance == '' && $all_essential =='' )
           return array();
 
-        $app_str = "1=1 ";
+        $app_str = "";
 
         if(count($cat_ids))
         {
@@ -91,10 +91,14 @@ class Inventory_model extends App_model {
         
         if($app_str != '' )
             $app_str = ' ('.$app_str.')';
+        else
+            $app_str ="1=1";
+
+
 
         $sql = "SELECT p.*,t.sku as parent_sku FROM (
                                 SELECT parent_id,sku from product 
-                                  WHERE ( $app_str )  
+                                  WHERE $app_str 
                                     AND parent_id > 0 group by parent_id 
                               ) t 
                           JOIN product p ON(p.parent_id=t.parent_id OR p.id=t.parent_id) 

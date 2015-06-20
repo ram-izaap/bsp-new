@@ -169,6 +169,12 @@
 		<div class="productlist clearfix">
 
 			<?php foreach ($close_outs as $parent_id => $parent): ?>
+
+				<?php 
+				$mpc = current(array_keys($pdetails[$parent_id]));
+				$color_name = $options[1][$mpc];
+			?>
+				
 				<div class="item">
 					<a href="#"><img class="prothumb main" src="<?php echo base_url('public/media/'.$parent['sku'].'-'.strtoupper($color_name).'.jpg');?>" width="380" height="700" alt=""> </a>
 					<div style="position: absolute; top: 0px;" id="videoModal_<?php echo $parent_id;?>">
