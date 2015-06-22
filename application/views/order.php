@@ -270,7 +270,15 @@
 		<div class="rsec wid_auto pull-right suborder">		
 				<input class="btn btn-primary btn-large submit-order" type="button" value="SUBMIT&#x00A;ORDER">		
 		</div>
+
 	</div>
 		<!--Total submit-order section\\-->
 
 </form>
+
+<div id="facebookG" style="display:none;">
+	<div id="blockG_1" class="facebook_blockG"></div>
+	<div id="blockG_2" class="facebook_blockG"></div>
+	<div id="blockG_3" class="facebook_blockG"></div>
+</div>
+

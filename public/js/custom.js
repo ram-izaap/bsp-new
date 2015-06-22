@@ -97,8 +97,12 @@
 				flag = false;
 			}
 
+			
 			if( flag )
 			{
+				var position = $(this).position();
+				$("#facebookG").css({display:'block',top:position.top,left:position.left});
+
 				$.post(location.href, $("#order-form").serialize(), function(rdata){
 				
 					if(rdata.status == 'success')
@@ -113,6 +117,9 @@
 							elm.after('<span class="error">'+val.error+'</span>');
 						});
 					}
+
+					$("#facebookG").css({display:'none'});
+
 				}, 'json');
 			}
 			

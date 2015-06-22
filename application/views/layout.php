@@ -34,7 +34,7 @@
 
                 <!--header start here-->
                 <header class="clearfix">
-                    <a href="#">
+                    <a href="<?php echo site_url();?>">
                         <img src="<?php echo base_url('public/img/logo.jpg');?>" width="93" height="89" alt="Clarasunwoo.com Logo">
                     </a>
                 </header>
