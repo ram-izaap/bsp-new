@@ -60,7 +60,7 @@ class Inventory_model extends App_model {
     {
     	if( !count($pids) && !count($cat_ids) && $all_clearance == '' && $all_essential =='' )
           return array();
-
+        
         $app_str = "";
 
         if(count($cat_ids))
@@ -77,11 +77,11 @@ class Inventory_model extends App_model {
         }       
         
 
-        if( $all_clearance != '' )
-        {
+        //if( $all_clearance != '' )
+        //{
             $app_str .= $app_str != ''? " OR ":'';
         	$app_str .= "  clearance='Y' ";
-        }
+        //}
 
         if( $all_essential !='' )
         {

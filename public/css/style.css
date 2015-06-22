@@ -307,3 +307,47 @@ body .forminfo1 .startdate, body .forminfo1 .enddate {
 
 .upload-div{text-align:center;}
 .upload-div input{width: inherit;}
+
+/* new css */
+.pageContainer1{
+    background: rgba(0, 0, 0, 0) url("../img/bg2.jpg") repeat scroll 0 0;
+    margin:0 auto;
+    padding: 20px;
+    width: 1220px;
+    border:1px solid red;
+}
+.full {
+    width: 100% !important;
+}
+.forminfo1 .l_sec{
+    color: #333;
+    font-family: "dtlnobeltregular";
+    font-size: 17px !important;
+    margin-right: 0;
+    width: 58s%;
+}
+.forminfo1 .r_sec {
+    color: #333;
+    font-family: "dtlnobeltregular";
+    font-size: 17px !important;
+    margin-right: 0;
+    width: 38%;
+}
+.productlist .sizes, .productlist .sizes .subtot {
+    display: inline-block;
+    margin: 7px auto;
+}
+.cartview .productlist .sizes ul {
+    width: 380px;
+}
+.productlist .sizes ul {
+    float: left;
+    font-family: "fjalla_oneregular";
+    margin-bottom: 8px;
+    width: 100%;
+}
+.pdf_containner .cartview th{ border:1px solid red; border:0 none; padding: 10px;}
+.pdf_containner .cartview .style{font-weight: bold;font-size: 18px;}
+.pdf_containner .cartview td ul li{ display: inline-block;}
+.pdf_containner .cartview td {border-bottom: 0 none;}
+/* new css */

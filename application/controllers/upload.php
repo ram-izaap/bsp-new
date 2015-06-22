@@ -53,8 +53,11 @@ class Upload extends CI_Controller {
 				$cats_id[$tmp] = $row['id'];
 			}
 
-			$tmpName = $_FILES['csv-file']['tmp_name'];
-
+			$upload_data = $this->upload->data();
+			//print_r($this->upload->data());die;
+			//$tmpName = $_FILES['csv-file']['tmp_name'];
+			$tmpName = $config['upload_path'].$upload_data['file_name']; 
+			//die($tmpName);
 			if(($handle = fopen($tmpName, 'r')) !== FALSE) 
 	        	$row=1;
 		        while(($data = fgetcsv($handle, 1000, ',')) !== FALSE) 
@@ -194,8 +197,10 @@ class Upload extends CI_Controller {
 	            //echo '<pre>';
 			    //print_r($errors);die;
 
-	            fclose($handle);
+	            
 	        }
+
+	        fclose($handle);
 		}
 
 		$this->data['upload_error'] = $upload_error;

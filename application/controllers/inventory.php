@@ -200,6 +200,8 @@ class Inventory extends CI_Controller {
 				//update order links data
 				$data['categories'] = $orderlinks_data['categories'];
 				$data['products'] 	= $orderlinks_data['products'];
+				$data['clearance'] 	= $all_clearance;
+				$data['essential'] 	= $all_essential;
 				$this->inventory_model->update( array('id' => $id), array('order_data' => json_encode($data)), 'order_links' );
 
 				$ordered_product_prices = array();
@@ -262,11 +264,13 @@ class Inventory extends CI_Controller {
 		$this->layout->view('order', $this->data);
 	}
 
-	function confirmation( $order_id = 0 )
+	function confirmation( $order_id = 0, $download = false )
 	{
-		if( !$order_id )
+		if( !$download && !$order_id )
 			redirect();
 
+		if( $download && !$order_id )
+			return '';
 
 		$order_details = $this->inventory_model->get_where( array('id' => $order_id), '*', 'order' )->row_array();
 
@@ -352,7 +356,15 @@ class Inventory extends CI_Controller {
         $this->data['cart_data'] = $cart_data;
         $this->data['order_total'] = $order_total;
 
-        $this->layout->view('confirmation', $this->data);
+        if(!$download)
+        {
+        	$this->layout->view('confirmation', $this->data);
+        }
+        else
+        {
+        	return $this->load->view('pdf', $this->data, TRUE);
+        }
+        
 
 	}
 
@@ -374,44 +386,55 @@ class Inventory extends CI_Controller {
         return $rules;
     }
 
-    public function send_mail($order_id = '',$data)
+    public function send_mail($order_id = '',$data = array())
     {
+    	
     	//send email to user.
-		
-		$message = "Hi ".$data['name']."<br/><br/>";
+    	$stylesheet = file_get_contents(base_url('public/css/style.css'));        
+		$content = $this->confirmation($order_id, TRUE);
 
-		$message .= "Your order has been craeted sucessfully!<br/>";
+		$this->load->library('pdf');
+        $pdf = $this->pdf->load();
+        $pdf_path = './uploads/'.'order-'.$order_id.'-'.time().'.pdf';
+        
+        $pdf->WriteHTML($stylesheet,1); 
+        $pdf->WriteHTML($content); // write the HTML into the PDF
+        $pdf->Output($pdf_path, 'F'); // save to file
 
+
+        $this->load->library('email');
+
+        $config['mailtype'] = 'html';
+		$config['charset'] = 'iso-8859-1';
+		$config['wordwrap'] = TRUE;
+
+		$this->email->initialize($config);
+
+        $subject = "Clara Sunwoo - Order#{$order_id}";
+
+        $message = "Hi ".$data['name']."<br/><br/>";
+		$message .= "Your order has been created sucessfully!<br/>";
 		$message .= "click <a href='".base_url('confirmation/'.$order_id)."'>here</a> to view your order details<br/><br/>";
-
 		$message .= "Regards<br/>Clara Sunwoo";
+
+		$this->email->from('test@clarasonline.com', 'Test');
+		$this->email->to($data['buyer_email'].',test@clarasonline.com'); 
+		$this->email->reply_to('test@clarasonline.com', 'Test');
+		//$this->email->cc('another@another-example.com'); 
+		//$this->email->bcc('them@their-example.com'); 
+
+		$this->email->subject($subject);
+		$this->email->message($message);	
+		$this->email->attach($pdf_path);
+
+		$this->email->send();
+
+
+
 		
-		$to_emails = $data['buyer_email'].",test@clarasonline.com";
-
-		$subject = "Clara Sunwoo - Order#{$order_id}";
-
-		// To send HTML mail, the Content-type header must be set
-		$headers  = 'MIME-Version: 1.0' . "\r\n";
-		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-
-		$headers .= "Reply-To: Test <test@clarasonline.com>". "\r\n";
-		// Additional headers
-		// $headers .= 'To: Mary <mary@example.com>, Kelly <kelly@example.com>' . "\r\n";
-		//$headers .= 'From: Birthday Reminder <birthday@example.com>' . "\r\n";
-		//$headers .= 'Cc: birthdayarchive@example.com' . "\r\n";
-		//$headers .= 'Bcc: birthdaycheck@example.com' . "\r\n";
-
-		
-
-		if( ! mail($to_emails, $subject, $message, $headers) )
-		{
-			return FALSE;
-		}
-		else
-		{
-			return TRUE;
-		}
     }
+
+   
 }
 
 /* End of file order.php */
